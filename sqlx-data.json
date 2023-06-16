@@ -1,0 +1,200 @@
+{
+  "db": "PostgreSQL",
+  "119e762c819714a135c3e11e8523115388afe038563beecb11a7c502cfeea91c": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Int8",
+          "Text"
+        ]
+      }
+    },
+    "query": "\nINSERT INTO tg_chat ( id, name )\nVALUES ( $1, $2 )\nON CONFLICT (id) DO UPDATE\nSET name = $2\n            "
+  },
+  "288711e418170d7fecbbf170e18f3875bfea819a848f512817388742fe913997": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Int8",
+          "Int8",
+          "Text",
+          "Text"
+        ]
+      }
+    },
+    "query": "\nINSERT INTO tg_user ( id, chat_id, username, name )\nVALUES ( $1, $2, $3, $4 )\nON CONFLICT ( id, chat_id ) DO UPDATE\nSET username = $3, name = $4\n            "
+  },
+  "46b96a9bf2f356cb0536236c87c4b96cafb64f0dc5fbb8ac0673a6b8c493bbce": {
+    "describe": {
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 0,
+          "type_info": "Int8"
+        },
+        {
+          "name": "chat_id",
+          "ordinal": 1,
+          "type_info": "Int8"
+        },
+        {
+          "name": "username",
+          "ordinal": 2,
+          "type_info": "Text"
+        },
+        {
+          "name": "name",
+          "ordinal": 3,
+          "type_info": "Text"
+        }
+      ],
+      "nullable": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "parameters": {
+        "Left": [
+          "Int8"
+        ]
+      }
+    },
+    "query": "\nSELECT id, chat_id, username, name FROM tg_user\nWHERE chat_id = $1\n            "
+  },
+  "5288ac07790883e7da3bdd20efef273395ff9380567221518fdad99342fff176": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Int8"
+        ]
+      }
+    },
+    "query": "\nDELETE FROM tg_chat\nWHERE id = $1\n            "
+  },
+  "57e4300e37e360067eb40b0bd8bcb574c6349b0e643547c917ce014ee8de0344": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Int8",
+          "Int8"
+        ]
+      }
+    },
+    "query": "\nDELETE FROM tg_user\nWHERE id = $1 AND chat_id = $2\n            "
+  },
+  "7945bd2af93797c057c2c56bcbcae2b0c185a1fb39eb9cff9fe50367d46c166c": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Int4"
+        ]
+      }
+    },
+    "query": "\n            DELETE FROM message_queue\n            WHERE id = $1\n            "
+  },
+  "a095efd7f5743e345374baa71526b74a41d3d36794652132068e266a7d957bf9": {
+    "describe": {
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 0,
+          "type_info": "Int8"
+        },
+        {
+          "name": "name",
+          "ordinal": 1,
+          "type_info": "Text"
+        }
+      ],
+      "nullable": [
+        false,
+        false
+      ],
+      "parameters": {
+        "Left": []
+      }
+    },
+    "query": "\nSELECT id, name FROM tg_chat \n            "
+  },
+  "bc838aa7b31323d669c2adaab53775f1ba69d1d7b16ab5e3beee5e6e28556fc8": {
+    "describe": {
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 0,
+          "type_info": "Int4"
+        },
+        {
+          "name": "chats",
+          "ordinal": 1,
+          "type_info": "Int8Array"
+        },
+        {
+          "name": "message",
+          "ordinal": 2,
+          "type_info": "Text"
+        },
+        {
+          "name": "images",
+          "ordinal": 3,
+          "type_info": "TextArray"
+        },
+        {
+          "name": "datetime",
+          "ordinal": 4,
+          "type_info": "Text"
+        }
+      ],
+      "nullable": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "parameters": {
+        "Left": []
+      }
+    },
+    "query": "\n                SELECT * from message_queue\n                "
+  },
+  "e24608efb0236fd7099184b436e15c0852ece961b5568a71fe0916113b5260f7": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Int8Array",
+          "Text",
+          "TextArray",
+          "Text"
+        ]
+      }
+    },
+    "query": "\n            INSERT INTO message_queue ( chats, message, images, datetime )\n            VALUES ( $1, $2, $3, $4 )\n            "
+  },
+  "ebc26b86d83715c0b70a76cf4ab3d7d7f7ee04d105a0117af0345b3482bbaf6a": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Int8",
+          "Int8"
+        ]
+      }
+    },
+    "query": "\n        UPDATE tg_chat\n        SET id = $1\n        WHERE id = $2\n        "
+  }
+}
